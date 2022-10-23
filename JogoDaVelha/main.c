@@ -22,10 +22,18 @@ int main(){
     int jogadas = 1;
     int controladormenu = 0;
     int controlatudo = 1;
-    
+
+    //Alocação e leitura do arquivo
+    Usuario *usuarios = alocaVetor(100);
+    lerRanking(usuarios);
+
+    FILE *arquivo = fopen("velha.ini","r");
+    int tam;
+
     while(controlatudo){
         
         jogovelha = criaMatriz(3,3);
+        
 
         while(controladormenu == 0){
 
@@ -45,7 +53,11 @@ int main(){
             
             switch(opcao){
                 case '0':
-                    
+                    fscanf(arquivo,"%d",&tam);
+                    //Atualização do arquivo
+                    escreveNovoRanking(usuarios,tam);
+                    fclose(arquivo);
+                    liberaVetor(usuarios);
                     return 0;
                 case '1':
                     printf(BOLD(CYAN("\nDigite o número de jogadores(1 ou 2):")));
@@ -115,7 +127,8 @@ int main(){
                     }    
                     break;
                 case '4': 
-                    //ranking();
+                    fscanf(arquivo,"%d",&tam);
+                    imprimeRanking(usuarios,tam);
                     break;  
         
                 default:
@@ -125,7 +138,7 @@ int main(){
         }
         if(opcaojg == '1'){
 
-            umplayer(jogovelha,jogador1,"Computador",contadorjogadas,jogadas);
+            umplayer(jogovelha,jogador1,"Computador",contadorjogadas,jogadas,usuarios);
             liberaMatriz(jogovelha,3);
             controladormenu = 0;    
         }

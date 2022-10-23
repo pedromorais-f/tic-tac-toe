@@ -1,7 +1,7 @@
 #ifndef _FUNCOES_H
 #define _FUNCOES_H
 
-//ESTRUTURA
+//ESTRUTURA DO RANKING
 typedef struct{
 
     char nome[100];
@@ -9,27 +9,23 @@ typedef struct{
     int derrota;                         
     int empate;
 
-}Usuário;
+}Usuario;
+
+//FUNÇOES PRINCIPAIS PARA O FUNCIONAMENTO DO JOGO
 
 //Ranking
-//void ranking
-//void ordenar
-//void ler
+void atualizaEstatisticas(Usuario *,Usuario,Usuario);
+void imprimeRanking(Usuario *,int);
 
 //Jogo
-void umplayer(char **,char*,char*,int,int);
+void umplayer(char **,char*,char*,int,int,Usuario*);
 void doisplayers(char **,char*,char*,int,int);
 
-//tabuleiro
+//Tabuleiro
 void tabuleiro();
-void liberaMatriz(char** matriz, int linha);
-char** criaMatriz(int m, int n);
 
-//inteligencia computador
-void inteligenciacomp(char**);
-
-//salvamento e carregamento de dados do jogo
-void escrevejogo(char **,char *,char,int,int,int,char *,char*);
+//Salvamento e carregamento de dados do jogo
+void escreveJogo(char **,char *,char,int,int,int,char *,char*);
 int lerJogo(char **,char *,char *,char[20],char,int,int);
 
 #endif
