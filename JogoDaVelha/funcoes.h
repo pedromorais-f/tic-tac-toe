@@ -14,12 +14,12 @@ typedef struct{
 //FUNÇOES PRINCIPAIS PARA O FUNCIONAMENTO DO JOGO
 
 //Ranking
-void atualizaEstatisticas(Usuario *,Usuario,Usuario);
+void atualizaEstatisticas(Usuario *,Usuario,Usuario,int*);
 void imprimeRanking(Usuario *,int);
 
 //Jogo
-void umplayer(char **,char*,char*,int,int,Usuario*);
-void doisplayers(char **,char*,char*,int,int);
+void umplayer(char **,char*,char*,int,int,Usuario*,int*);
+void doisplayers(char **,char*,char*,int,int,Usuario*,int*);
 
 //Tabuleiro
 void tabuleiro();

@@ -8,9 +8,11 @@
 
 //função principal main
 int main(){
-
+    
+    //Matriz do jogo da velha
     char **jogovelha;
     
+    //Opções do menu e da escolha de 1 ou 2 jogadores
     char opcao;
     char opcaojg;
     
@@ -18,23 +20,31 @@ int main(){
     char jogador2[20];
     char nomearq[20];
     
+    //Contadores do jogo
     int contadorjogadas = 0;
     int jogadas = 1;
+    //Controladores do jogo como um todo e do menu principal
     int controladormenu = 0;
     int controlatudo = 1;
-
+    
     //Alocação e leitura do arquivo
     Usuario *usuarios = alocaVetor(100);
-    lerRanking(usuarios);
-
-    FILE *arquivo = fopen("velha.ini","r");
+    
+    FILE *ranking = fopen("velha.ini","r");
     int tam;
 
+    fscanf(ranking,"%d ",&tam);
+
+    for(int i = 0;i < tam;i++){
+
+        fgets(usuarios[i].nome,100,ranking);
+        usuarios[i].nome[strlen(usuarios[i].nome) - 1] = '\0';
+        fscanf(ranking,"%d %d %d ",&usuarios[i].vitoria,&usuarios[i].empate,&usuarios[i].derrota);
+    }    
     while(controlatudo){
         
         jogovelha = criaMatriz(3,3);
         
-
         while(controladormenu == 0){
 
             
@@ -53,16 +63,15 @@ int main(){
             
             switch(opcao){
                 case '0':
-                    fscanf(arquivo,"%d",&tam);
-                    //Atualização do arquivo
                     escreveNovoRanking(usuarios,tam);
-                    fclose(arquivo);
+                    fclose(ranking);
                     liberaVetor(usuarios);
                     return 0;
                 case '1':
                     printf(BOLD(CYAN("\nDigite o número de jogadores(1 ou 2):")));
                     scanf("%c",&opcaojg);
                     getchar();
+                    //Validação das opções de jogabilidade
                     while(((opcaojg != '2') && (opcaojg != '1'))){
 
                         printf(BOLD(RED("\nAVISO,QUANTIDADE INVÁLIDA\n")));
@@ -85,6 +94,7 @@ int main(){
                     printf(BOLD(CYAN("Digite o nome do arquivo salvo:")));
                     fgets(nomearq,20,stdin);
                     remocao_salto(nomearq);
+                    //Validação se o arquivo em questão existe ou não
                     if(lerJogo(jogovelha,jogador1,jogador2,nomearq,opcaojg,3,3) == -1){
 
                         printf(BOLD(RED("ARQUIVO NÃO ENCONTRADO!!!\n")));
@@ -106,6 +116,7 @@ int main(){
                     }    
                     break;
                 case '3':  
+                    //Validação se o arquivo em questão existe ou não
                     if(lerJogo(jogovelha,jogador1,jogador2,nomearq,opcaojg,3,3) == -1){
 
                         printf(BOLD(RED("ARQUIVO NÃO ENCONTRADO!!!\n")));
@@ -126,8 +137,8 @@ int main(){
                         controladormenu = 1;
                     }    
                     break;
-                case '4': 
-                    fscanf(arquivo,"%d",&tam);
+                case '4':
+                    //Impressão do Ranking dos 10 melhores jogadores
                     imprimeRanking(usuarios,tam);
                     break;  
         
@@ -138,13 +149,15 @@ int main(){
         }
         if(opcaojg == '1'){
 
-            umplayer(jogovelha,jogador1,"Computador",contadorjogadas,jogadas,usuarios);
+            //Início do jogo de 1 jogador
+            umplayer(jogovelha,jogador1,"Computador",contadorjogadas,jogadas,usuarios,&tam);
             liberaMatriz(jogovelha,3);
             controladormenu = 0;    
         }
         else if(opcaojg == '2'){
         
-            doisplayers(jogovelha,jogador1,jogador2,contadorjogadas,jogadas);
+            //Início do jogo de 2 jogadores
+            doisplayers(jogovelha,jogador1,jogador2,contadorjogadas,jogadas,usuarios,&tam);
             liberaMatriz(jogovelha,3);
             controladormenu = 0;
         }

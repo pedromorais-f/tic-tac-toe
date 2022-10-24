@@ -13,6 +13,7 @@
 //Titulo
 void titulo(){
 
+    //Impressão do título do Jogo
     printf(BOLD(CYAN("     ██╗ ██████╗  ██████╗  ██████╗ \n")));
     printf(BOLD(CYAN("     ██║██╔═══██╗██╔════╝ ██╔═══██╗\n")));
     printf(BOLD(BLUE("     ██║██║   ██║██║  ███╗██║   ██║\n")));
@@ -146,6 +147,7 @@ void ganhou(char *jogador){
     printf(BOLD("Digite qualquer tecla para continuar!\n"));
 
 }
+
 void empate(){
 
     printf(BOLD(YELLOW("██    ██ ███████ ██      ██   ██  █████  \n")));
@@ -157,6 +159,7 @@ void empate(){
     
     printf(BOLD(CYAN("Digite qualquer tecla para continuar!\n")));
 }
+
 void perdeu(){
 
     printf(BOLD(RED("██    ██  ██████   ██████ ███████     ██████  ███████ ██████  ██████  ███████ ██    ██ \n")));
@@ -173,7 +176,7 @@ void perdeu(){
 void nomejogadores(char cor[6],char jogador[20],int n){
 
     char verificacao[20];
-    
+    //Validação se o usuário digitar o nome "Computador"
     do{
         printf("\x1b[1m%sDigite o nome do Jogador %d:",cor,n);
         fgets(jogador,20,stdin);
@@ -193,6 +196,7 @@ void nomejogadores(char cor[6],char jogador[20],int n){
     }while(strcmp(verificacao,"COMPUTADOR") == 0);
 
 }
+
 void teclamenu(){
 
     char tecla;
@@ -200,8 +204,10 @@ void teclamenu(){
     scanf("%c",&tecla);
     getchar();
 }
+
 void comandos(char comando[30],char *jogador,char cor[6]){
 
+    //Leitura dos comandos do jogo
     printf("\x1b[0m%s\n%s,digite o comando:",cor,jogador);
     fgets(comando,30,stdin);
     remocao_salto(comando);
@@ -211,6 +217,7 @@ void comandos(char comando[30],char *jogador,char cor[6]){
 //Tabuleiro
 char** criaMatriz(int linha, int coluna){
 
+    //Alocação do tabuleiro e a inicialização de cada posição com espaços vazios
     char **matriz;
 
     matriz = malloc(linha * sizeof(char*));
@@ -231,6 +238,7 @@ char** criaMatriz(int linha, int coluna){
         return matriz;
 
 }
+
 void liberaMatriz(char** matriz, int linha){
 
     for(int q = 0;q < linha;q++){
@@ -354,7 +362,7 @@ void inteligenciaComp(char **jogovelha){
         jogovelha[1][0] = 'O';
     }
     
-    //possibildades de vitória horizontal
+    //possibildades de vitória do Jogador 1 horizontal
     else if(jogovelha[0][0] == 'X' && jogovelha[0][1] == 'X' && jogovelha[0][2] == ' '){
 
         jogovelha[0][2] = 'O';
@@ -380,7 +388,7 @@ void inteligenciaComp(char **jogovelha){
         jogovelha[0][0] = 'O';
     }
 
-    //POssibilidades de vitória vertical
+    //POssibilidades de vitória do Jogador 1 vertical
     else if(jogovelha[0][0] == 'X' && jogovelha[1][0] == 'X' && jogovelha[2][0] == ' '){
 
         jogovelha[2][0] = 'O';
@@ -407,7 +415,7 @@ void inteligenciaComp(char **jogovelha){
     }
 
 
-    //Possibilidades diagonais
+    //Possibilidades do Jogador 1 diagonais
     else if(jogovelha[0][0] == 'X' && jogovelha[1][1] == 'X' && jogovelha[2][2] == ' '){
 
         jogovelha[2][2] = 'O';
@@ -426,7 +434,7 @@ void inteligenciaComp(char **jogovelha){
     }
      
     
-    //vitória no meio
+    //vitória do Jogador 1 no meio
     else if(jogovelha[0][0] == 'X' && jogovelha[1][1] == ' ' && jogovelha[2][2] == 'X'){
 
         jogovelha[1][1] = 'O';
@@ -445,7 +453,7 @@ void inteligenciaComp(char **jogovelha){
     }
     
 
-    //vitória nos cantos meio
+    //vitória do Jogador 1 nos cantos meio
     else if(jogovelha[0][0] == 'X' && jogovelha[0][1] == ' ' && jogovelha[0][2] == 'X'){
 
         jogovelha[0][1] = 'O';
@@ -463,7 +471,7 @@ void inteligenciaComp(char **jogovelha){
         jogovelha[1][0] = 'O';
     }
 
-    //jogadas iniciais
+    //jogadas iniciais da Máquina
     else if(jogovelha[0][0] == 'X' && jogovelha[0][1] == ' ' && jogovelha[0][2] == ' ' && jogovelha[1][0] == ' ' && jogovelha[1][1] == ' ' && jogovelha[1][2] == ' ' && jogovelha[2][0] == ' ' && jogovelha[2][1] == ' ' && jogovelha[2][2] == ' '){
 
         jogovelha[1][1] = 'O';
@@ -485,7 +493,7 @@ void inteligenciaComp(char **jogovelha){
         jogovelha[0][0] = 'O';
     }
     
-    //jogadas sem efeito
+    //jogadas que não resultam em vitória ou derrota da máquina
     else{
 
         do{
@@ -500,59 +508,33 @@ void inteligenciaComp(char **jogovelha){
 }    
 
 //Funções de auxílio para o Ranking
-/*int contaJogadores(Usuario *jogador){
-
-    FILE *arquivo = fopen("velha.ini","r");
-
-    int contajogadores = 0;
-    
-    
-    while(!feof(arquivo)){
-
-        fscanf(arquivo,"%s ",jogador[contajogadores].nome);
-        fscanf(arquivo,"%d %d %d",&jogador[contajogadores + 1].vitoria,&jogador[contajogadores + 1].empate,&jogador[contajogadores + 1].derrota);
-        contajogadores = contajogadores + 2;
-    }
-
-    fclose(arquivo);
-    
-    return contajogadores;
-}*/
 Usuario* alocaVetor(int tam){
 
+    //Alocação do vetor de jogadores para o Ranking
     Usuario *usuarios;
 
     usuarios = malloc(tam * sizeof(Usuario));
 
     return usuarios;
 }
+
 void liberaVetor(Usuario *jogadores){
 
+    //Liberação do vetor alocado
     free(jogadores);
 }
-void lerRanking(Usuario *jogadores){
 
-    FILE *ranking = fopen("velha.ini","r");
-    int tam;
-
-    fscanf(ranking,"%d",&tam);
-
-    for(int i = 0;i < tam;i++){
-
-        fgets(jogadores[i].nome,100,ranking);
-        jogadores[i].nome[strlen(jogadores[i].nome) - 1] = '\0';
-        fscanf(ranking,"%d %d %d",&jogadores[i].vitoria,&jogadores[i].empate,&jogadores[i].derrota);
-
-    }    
-}
 void ordenaVetor(Usuario *vetor,int n){
+    
+    //Ordenação dos vetores priorizando o número de vitórias 
+    //e o próximo critério,o empate
     
     Usuario aux;                                                                 
 
     int maiorAtual;                                                             
 
     for(int i = 0; i < n; i++){                                                                       
-
+        //Verificação de quem tem o maior número de vitórias
         maiorAtual = i;                                                         
 
         for (int j = i + 1; j < n;j++) {                                       
@@ -561,7 +543,7 @@ void ordenaVetor(Usuario *vetor,int n){
 
                 maiorAtual = j;
             }
-            else if((vetor[j].vitoria = vetor[maiorAtual].vitoria)){
+            else if((vetor[j].vitoria == vetor[maiorAtual].vitoria)){
 
                 if(vetor[j].empate > vetor[maiorAtual].empate){
 
@@ -569,7 +551,7 @@ void ordenaVetor(Usuario *vetor,int n){
                 }
             }                                                
         }                                                                       
-
+        //Troca de suas posições no vetor
         if(maiorAtual != i) {                                                   
 
             aux = vetor[i];                                                     
@@ -583,11 +565,12 @@ void ordenaVetor(Usuario *vetor,int n){
     }
 
 }
+
 void escreveNovoRanking(Usuario *jogadores,int tam){
 
+    
     FILE *arquivo = fopen("velha.ini","w");
     
-    lerRanking(jogadores);
     
     fprintf(arquivo,"%d\n",tam);
 
@@ -596,50 +579,28 @@ void escreveNovoRanking(Usuario *jogadores,int tam){
         fprintf(arquivo,"%s\n",jogadores[i].nome);
         fprintf(arquivo,"%d %d %d\n",jogadores[i].vitoria,jogadores[i].empate,jogadores[i].derrota);
     }
-
-    fclose(arquivo);
 }
-int checaJogadores(Usuario *jogadores,int tam,Usuario j1,Usuario j2){
 
-    FILE *arquivo = fopen("velha.ini","r");
-    int contador = 0;
-    fscanf(arquivo,"%d",&tam);
-    //printf("%d\n",tam);
-    //printf("%s\n",j1.nome);
-    //printf("%s\n",j2.nome);
+int checaJogadores(Usuario *jogadores,int tam,Usuario jogador){
+
 
     for(int i = 0;i < tam;i++){
 
-        fgets(jogadores[i].nome,100,arquivo);
-        jogadores[i].nome[strlen(jogadores[i].nome) - 1] = '\0';
-        fscanf(arquivo,"%d %d %d",&jogadores[i].vitoria,&jogadores[i].empate,&jogadores[i].derrota);
-        printf("%s",jogadores[0].nome);
-        if(strcmp(j1.nome,jogadores[i].nome) == 0){
+        if(strcmp(jogador.nome,jogadores[i].nome) == 0){
 
-            //strcpy(jogadores[i].nome,j1.nome);
-            jogadores[i].vitoria += j1.vitoria;
-            jogadores[i].empate += j1.empate;
-            jogadores[i].derrota += j1.derrota;
-            printf("JA%d\n",i);
-            contador = contador + 1;
-        }
-        if(strcmp(j2.nome,jogadores[i].nome) == 0){
+            
+            return i;
 
-            //strcpy(jogadores[i].nome,j2.nome);
-            jogadores[i].vitoria += j2.vitoria;
-            jogadores[i].empate += j2.empate;
-            jogadores[i].derrota += j2.derrota;
-            printf("JB%d\n",i);
-            contador = contador + 2;
         }
     }
-    printf("C%d\n",contador);
-    return contador;
+
+    return -1;
 }
+
 int posicaoRanking(Usuario *jogadores,char *jogador){
 
-    lerRanking(jogadores);
-
+    //Procura a posição do player nos 10 primeiros jogadores do vetor
+    //e retorna sua posição ou -1,mostrando que não está posicionado no ranking
     for(int i = 0;i < 10;i++){
 
         if(strcmp(jogadores[i].nome,jogador) == 0){
@@ -654,4 +615,5 @@ int posicaoRanking(Usuario *jogadores,char *jogador){
 
     return 0;
 }
+
 

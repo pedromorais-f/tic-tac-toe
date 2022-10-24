@@ -10,13 +10,18 @@
 
 
 //Jogo 1 ou 2 jogadores
-void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas,int jogadas,Usuario *jogadores){
+void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas,int jogadas,Usuario *jogadores,int *tam){
     
+    //Variáveis dos comandos,sendo comando = linha geral,comando 1 = a ação(marcar,salvar ou voltar),
+    //e comando 2 = escrever onde deseja salvar ou marcação no tabuleiro
     char comando[30];
     char *comando1;
     char *comando2;
+    
+    //Nome do arquivo
     char *nomearq;
 
+    //Coordenadas das posições no tabuleiro
     int linha;
     int coluna;
 
@@ -45,6 +50,7 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
         //jogador 1
         if(jogadas % 2 != 0){
 
+            //Função para ler o comando escolhido
             comandos(comando,jogador1,"\x1b[32m");
             
             comando1 = strtok(comando," ");
@@ -60,10 +66,12 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
                 comando2 = strtok(NULL," ");
             }
     
+            //Marcação das casas
             if(strcmp("marcar",comando1) == 0){
 
                 linha = comando2[0] - '0';
                 coluna = comando2[1] - '0';
+                //Validação da marcação das casas no jogo
                 while(((linha > 3) || (linha <= 0)) || ((coluna > 3) || (coluna <= 0)) || (jogovelha[linha-1][coluna-1] != ' ')){
 
                     printf(BOLD(RED("CASAS INVÁLIDAS!!!\n")));
@@ -79,6 +87,7 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
             
             else if(strcmp("salvar",comando1) == 0){
 
+                //Comando de salvar o jogo em um arquivo
                 nomearq = comando2;
                 escreveJogo(jogovelha,nomearq,'1',3,3,jogadas,jogador1,"Computador");
                 printf("\x1b[1m\x1b[37mArquivo '%s' salvo com sucesso!\n",nomearq);
@@ -87,6 +96,7 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
 
             if(strcmp("voltar",comando1) == 0){
                
+                //Volta ao menu e salva o jogo que estava em curso em um arquivo
                 escreveJogo(jogovelha,"jogoEmAndamento.txt",'1',3,3,jogadas,jogador1,"Computador");
                 break;
             } 
@@ -95,6 +105,7 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
         //computador
         else if(jogadas % 2 == 0){
             
+            //Jogadas da máquina e sua "Inteligencia"
             printf("\x1b[31m\nVez do %s!\n",jogador2);
             inteligenciaComp(jogovelha);
             jogadas++;
@@ -110,6 +121,9 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
             jgdr1.vitoria++;
             jgdr2.derrota++;
 
+            //Atualização e ordenação do ranking
+            atualizaEstatisticas(jogadores,jgdr1,jgdr2,tam);
+
             //Posição no Ranking
             if(posicaoRanking(jogadores,jogador1) == -1){
 
@@ -120,9 +134,7 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
                 printf("\n\x1b[1mSua posição no Ranking:%d\n",posicaoRanking(jogadores,jogador1));
             }
 
-            //Atualização e ordenação do ranking
-            atualizaEstatisticas(jogadores,jgdr1,jgdr2);
-
+            //Tecla de voltar para o menu
             teclamenu();
 
             printf("\n");
@@ -137,8 +149,12 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
             jgdr1.derrota++;
             jgdr2.vitoria++;
 
+
+            //Atualização e ordenação do ranking
+            atualizaEstatisticas(jogadores,jgdr1,jgdr2,tam);
+            
             //Posição no Ranking
-            if(posicaoRanking(jogadores,jogador2) == -1){
+            if(posicaoRanking(jogadores,jogador1) == -1){
 
                 printf(BOLD(YELLOW("\nSua posição está fora do Ranking\n")));
             }
@@ -147,9 +163,7 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
                 printf("\n\x1b[1mSua posição no Ranking:%d\n",posicaoRanking(jogadores,jogador2));
             }
 
-            //Atualização e ordenação do ranking
-            atualizaEstatisticas(jogadores,jgdr1,jgdr2);
-
+            //Tecla de volta ao menu
             teclamenu();
 
             printf("\n");
@@ -170,25 +184,64 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
             jgdr2.empate++;
 
             //Atualização e ordenação do ranking
-            atualizaEstatisticas(jogadores,jgdr1,jgdr2);
+            atualizaEstatisticas(jogadores,jgdr1,jgdr2,tam);
 
-    
+            //Posição no Ranking
+            if(posicaoRanking(jogadores,jogador1) == -1){
+
+                printf(BOLD(YELLOW("\nSua posição está fora do Ranking\n")));
+            }
+            else{
+
+                printf("\n\x1b[1mSua posição no Ranking:%d\n",posicaoRanking(jogadores,jogador1));
+            }
+            //Posição no Ranking
+            if(posicaoRanking(jogadores,jogador2) == -1){
+
+                printf(BOLD(YELLOW("\nSua posição está fora do Ranking\n")));
+            }
+            else{
+
+                printf("\n\x1b[1mSua posição no Ranking:%d\n",posicaoRanking(jogadores,jogador2));
+            }
+
+            //Tecla de volta ao menu
             teclamenu();
             printf("\n");
             break;      
         }
     }
 }
-void doisplayers(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas,int jogadas){
 
-    //Comandos do jogo
+void doisplayers(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas,int jogadas,Usuario *jogadores,int *tam){
+
+    //Variáveis dos comandos,sendo comando = linha geral,comando 1 = a ação(marcar,salvar ou voltar),
+    //e comando 2 = escrever onde deseja salvar ou marcação no tabuleiro
     char comando[30];
     char *comando1;
     char *comando2;
+    
+    //Variável para o nome do arquivo
     char *nomearq;
 
+    //Casas para marcação no tabuleiro
     int linha;
     int coluna;
+
+    //Inicialização da struct
+    //Jogador1
+    Usuario jgdr1;
+    strcpy(jgdr1.nome,jogador1);
+    jgdr1.vitoria = 0;
+    jgdr1.empate = 0;
+    jgdr1.derrota = 0;
+
+    //Jogador2
+    Usuario jgdr2;
+    strcpy(jgdr2.nome,jogador2);
+    jgdr2.vitoria = 0;
+    jgdr2.empate = 0;
+    jgdr2.derrota = 0;
 
 
     while(contadorjogadas <= 9){
@@ -214,6 +267,7 @@ void doisplayers(char **jogovelha,char *jogador1,char *jogador2,int contadorjoga
                 comando2 = strtok(NULL," ");
             }
     
+            //Marcação das casas do Jogador 1
             if(strcmp("marcar",comando1) == 0){
     
                 linha = comando2[0] - '0';
@@ -231,6 +285,7 @@ void doisplayers(char **jogovelha,char *jogador1,char *jogador2,int contadorjoga
                 jogadas++; 
             }
                         
+            //Salvamento do jogo
             else if(strcmp("salvar",comando1) == 0){
 
                 nomearq = comando2;
@@ -239,6 +294,7 @@ void doisplayers(char **jogovelha,char *jogador1,char *jogador2,int contadorjoga
                 contadorjogadas = contadorjogadas - 1;
             }
 
+            //Volta ao menu e escreve o jogo em andamento
             if(strcmp("voltar",comando1) == 0){
                
                 escreveJogo(jogovelha,"jogoEmAndamento.txt",'2',3,3,jogadas,jogador1,jogador2);
@@ -264,6 +320,7 @@ void doisplayers(char **jogovelha,char *jogador1,char *jogador2,int contadorjoga
                 comando1 = strtok(comando," ");
                 comando2 = strtok(NULL," ");
             }
+            //Marcação no tabuleiro do Jogador 2
             if(strcmp("marcar",comando1) == 0){
                    
                 linha = comando2[0] - '0';
@@ -280,7 +337,7 @@ void doisplayers(char **jogovelha,char *jogador1,char *jogador2,int contadorjoga
                 jogovelha[linha - 1][coluna - 1] = 'O';
                 jogadas++; 
             }
-                        
+            //Salvamento do jogo          
             else if(strcmp("salvar",comando) == 0){
 
                 nomearq = comando2;
@@ -288,7 +345,7 @@ void doisplayers(char **jogovelha,char *jogador1,char *jogador2,int contadorjoga
                 printf("\x1b[1m\x1b[37mArquivo '%s' salvo com sucesso!\n",nomearq);
                 contadorjogadas = contadorjogadas - 1;
             }
-
+            //Volta ao menu e salva o jogo em andamento
             if(strcmp("voltar",comando1) == 0){
                 
                 escreveJogo(jogovelha,"jogoEmAndamento.txt",'2',3,3,jogadas,jogador1,jogador2);
@@ -303,15 +360,21 @@ void doisplayers(char **jogovelha,char *jogador1,char *jogador2,int contadorjoga
                 
             ganhou(jogador1);
             
+            jgdr1.vitoria++;
+            jgdr2.derrota++;
+
+            //Atualização e ordenação do ranking
+            atualizaEstatisticas(jogadores,jgdr1,jgdr2,tam);
+
             //Posição no Ranking
-            /*if(posicaoRanking(jogadores,jogador1) == -1){
+            if(posicaoRanking(jogadores,jogador1) == -1){
 
                 printf(BOLD(YELLOW("\nSua posição está fora do Ranking\n")));
             }
             else{
 
                 printf("\n\x1b[1mSua posição no Ranking:%d\n",posicaoRanking(jogadores,jogador1));
-            }*/
+            }
             
             
             teclamenu();
@@ -326,15 +389,22 @@ void doisplayers(char **jogovelha,char *jogador1,char *jogador2,int contadorjoga
                 
             ganhou(jogador2);
 
+            jgdr1.derrota++;
+            jgdr2.vitoria++;
+
+
+            //Atualização e ordenação do ranking
+            atualizaEstatisticas(jogadores,jgdr1,jgdr2,tam);
+            
             //Posição no Ranking
-            /*if(posicaoRanking(jogadores,jogador1) == -1){
+            if(posicaoRanking(jogadores,jogador1) == -1){
 
                 printf(BOLD(YELLOW("\nSua posição está fora do Ranking\n")));
             }
             else{
 
-                printf("\n\x1b[1mSua posição no Ranking:%d\n",posicaoRanking(jogadores,jogador1));
-            }*/
+                printf("\n\x1b[1mSua posição no Ranking:%d\n",posicaoRanking(jogadores,jogador2));
+            }
             
 
             teclamenu();
@@ -353,8 +423,30 @@ void doisplayers(char **jogovelha,char *jogador1,char *jogador2,int contadorjoga
             tabuleiro(jogovelha);
                 
             empate();
+            jgdr1.empate++;
+            jgdr2.empate++;
 
-            //contadores de estatisticas
+             //Atualização e ordenação do ranking
+            atualizaEstatisticas(jogadores,jgdr1,jgdr2,tam);
+
+            //Posição no Ranking
+            if(posicaoRanking(jogadores,jogador1) == -1){
+
+                printf(BOLD(YELLOW("\nSua posição está fora do Ranking\n")));
+            }
+            else{
+
+                printf("\n\x1b[1mSua posição no Ranking:%d\n",posicaoRanking(jogadores,jogador1));
+            }
+            //Posição no Ranking
+            if(posicaoRanking(jogadores,jogador2) == -1){
+
+                printf(BOLD(YELLOW("\nSua posição está fora do Ranking\n")));
+            }
+            else{
+
+                printf("\n\x1b[1mSua posição no Ranking:%d\n",posicaoRanking(jogadores,jogador2));
+            }
             
                 
             teclamenu();
@@ -372,10 +464,14 @@ void escreveJogo(char **jogovelha,char *arquivo,char opcaojg,int l,int c,int jog
 
     FILE *jogo1 = fopen(arquivo,"w");
 
+    //Opção jogada no jogo,sendo 1 ou 2 jogadores
     fprintf(jogo1,"%c\n",opcaojg);
 
+    //Salva o nome dos jogadores na partida
     fprintf(jogo1,"%s\n",jogador1);
     fprintf(jogo1,"%s \n",jogador2);
+    
+    //Salva o tabuleiro e os espaços vazios se tornam asteriscos
     for(int i = 0;i < l;i++){
 
         for(int j = 0;j < c;j++){
@@ -390,6 +486,8 @@ void escreveJogo(char **jogovelha,char *arquivo,char opcaojg,int l,int c,int jog
         }
         fprintf(jogo1,"\n");
     } 
+
+    //Salva quem foi o último a jogar
     if(jogadas % 2 != 0){
 
         opcaojg = '1';
@@ -401,11 +499,12 @@ void escreveJogo(char **jogovelha,char *arquivo,char opcaojg,int l,int c,int jog
     }
     fclose(jogo1);      
 }
+
 int lerJogo(char **jogovelha,char *jogador1,char *jogador2,char arquivo[20],char opcaojg,int l,int c){
 
     
     FILE *jogo1 = NULL;
-    
+    //Validação do arquivo,se ele não existir,retorna -1
     jogo1 = fopen(arquivo,"r");
     if(jogo1 == NULL){
 
@@ -413,12 +512,16 @@ int lerJogo(char **jogovelha,char *jogador1,char *jogador2,char arquivo[20],char
         return -1;
     }
 
+    //Leitura da opção jogada salva no arquivo
     fscanf(jogo1,"%c ",&opcaojg);
+
+    //Leitura do nomme dos jogadores na seção e remoção do /n na leitura
     fgets(jogador1,20,jogo1);
     jogador1[strlen(jogador1) - 1] = '\0';
     fgets(jogador2,20,jogo1);
     jogador2[strlen(jogador2) - 1] = '\0';
     
+    //Leitura do tabuleiro
     for(int i = 0;i < l;i++){
 
         for(int j = 0;j < c;j++){
@@ -433,6 +536,7 @@ int lerJogo(char **jogovelha,char *jogador1,char *jogador2,char arquivo[20],char
         }
     }
 
+    //Substituição dos asteriscos por espaços vazios 
     for(int k = 0;k < l;k++){
 
         for(int m = 0;m < c;m++){
@@ -445,6 +549,7 @@ int lerJogo(char **jogovelha,char *jogador1,char *jogador2,char arquivo[20],char
     }
     fclose(jogo1);
 
+    //Retorno de 1,para a sucesso do carregamento
     return 1;
 }
 
@@ -452,6 +557,7 @@ int lerJogo(char **jogovelha,char *jogador1,char *jogador2,char arquivo[20],char
 //Tabuleiro
 void tabuleiro(char **jogovelha){
 
+    
     printf("\u250F");
     for(int i = 0; i < 4; i++){
         printf("\u2501\u2501\u2501");
@@ -516,70 +622,56 @@ void tabuleiro(char **jogovelha){
 
 
 //Ranking e suas funções 
-void atualizaEstatisticas(Usuario *jogadores,Usuario jgdr1,Usuario jgdr2){
+void atualizaEstatisticas(Usuario *jogadores,Usuario jgdr1,Usuario jgdr2,int *tam){
 
-    FILE *ranking = fopen("velha.ini","r+");
-    int tam;
-    fscanf(ranking,"%d ",&tam);
-    for(int i = 0;i < tam;i++){
+    int posicao1 = checaJogadores(jogadores,*tam,jgdr1);
+    int posicao2 = checaJogadores(jogadores,*tam,jgdr2);
 
-        fgets(jogadores[i].nome,100,ranking);
-        jogadores[i].nome[strlen(jogadores[i].nome) - 1] = '\0';
-        fscanf(ranking,"%d %d %d",&jogadores[i].vitoria,&jogadores[i].empate,&jogadores[i].derrota);
+    //Incrementação e criação de novos usuários no Ranking
+    if(posicao1 == -1){
+
+        strcpy(jogadores[*tam].nome,jgdr1.nome);
+        jogadores[*tam].vitoria = jgdr1.vitoria;
+        jogadores[*tam].empate = jgdr1.empate;
+        jogadores[*tam].derrota = jgdr1.derrota;
+        
+        *tam = *tam + 1;
+    }
+    else{
+
+        strcpy(jogadores[posicao1].nome,jgdr1.nome);
+        jogadores[posicao1].vitoria += jgdr1.vitoria;
+        jogadores[posicao1].empate += jgdr1.empate;
+        jogadores[posicao1].derrota += jgdr1.derrota;
+    }
+    if(posicao2 == -1){
+
+        strcpy(jogadores[*tam].nome,jgdr2.nome);
+        jogadores[*tam].vitoria = jgdr2.vitoria;
+        jogadores[*tam].empate = jgdr2.empate;
+        jogadores[*tam].derrota = jgdr2.derrota;
+
+        *tam = *tam + 1;
+    }
+    else{
+
+        strcpy(jogadores[posicao2].nome,jgdr2.nome);
+        jogadores[posicao2].vitoria += jgdr2.vitoria;
+        jogadores[posicao2].empate += jgdr2.empate;
+        jogadores[posicao2].derrota += jgdr2.derrota;
     }
     
-    if(checaJogadores(jogadores,tam,jgdr1,jgdr2) == 0){
-    
-        strcpy(jogadores[tam].nome,jgdr1.nome);
-        jogadores[tam].vitoria = jgdr1.vitoria;
-        jogadores[tam].empate = jgdr1.empate;
-        jogadores[tam].derrota = jgdr1.derrota;
-
-        tam = tam + 1;
-
-        strcpy(jogadores[tam].nome,jgdr2.nome);
-        jogadores[tam].vitoria = jgdr2.vitoria;
-        jogadores[tam].empate = jgdr2.empate;
-        jogadores[tam].derrota = jgdr2.derrota;
-
-        tam = tam + 1;
-    }
-    else if(checaJogadores(jogadores,tam,jgdr1,jgdr2) == 1){
-
-        strcpy(jogadores[tam].nome,jgdr2.nome);
-        jogadores[tam].vitoria = jgdr2.vitoria;
-        jogadores[tam].empate = jgdr2.empate;
-        jogadores[tam].derrota = jgdr2.derrota;
-
-        tam = tam + 1;
-    }
-    else if(checaJogadores(jogadores,tam,jgdr1,jgdr2) == 2){
-
-        strcpy(jogadores[tam].nome,jgdr1.nome);
-        jogadores[tam].vitoria = jgdr1.vitoria;
-        jogadores[tam].empate = jgdr1.empate;
-        jogadores[tam].derrota = jgdr1.derrota;
-
-        tam = tam + 1;
-    }
     
     //ordenação dos vetores
-    ordenaVetor(jogadores,tam);
-    fclose(ranking);
-    
-    FILE *arquivo = fopen("velha.ini","r+");
-    
-    //Atualização de players no ranking
-    fprintf(ranking,"%d",tam);
-    
-    fclose(arquivo);
+    ordenaVetor(jogadores,*tam);
     
 }
+
 void imprimeRanking(Usuario *jogadores,int tam){
 
-    FILE *arquivo = fopen("velha.ini","r");
+    //Controlador do Ranking
     int controlador = 1;
-    lerRanking(jogadores);
+    
     while(controlador){
         
         printf(BOLD(WHITE("RANKING\n\n\n")));
@@ -600,7 +692,6 @@ void imprimeRanking(Usuario *jogadores,int tam){
         teclamenu();
         break;
     }
-    fclose(arquivo);
 }
 
 

@@ -37,7 +37,7 @@ void lerRanking(Usuario *);
 void liberaVetor(Usuario *);
 void escreveNovoRanking(Usuario*,int);
 void ordenaVetor(Usuario*,int);
-int checaJogadores(Usuario *,int,Usuario,Usuario);
+int checaJogadores(Usuario *,int,Usuario);
 int posicaoRanking(Usuario *,char *);
 
 #endif
