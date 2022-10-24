@@ -170,9 +170,9 @@ void imprimeRanking(Usuario *jogadores,int tam){
     //Impressão do Ranking com as informações dos jogadores
     while(controlador){
         
-        printf(BOLD(WHITE("RANKING\n\n\n")));
+        printf(BOLD(CYAN("\n\n\nRANKING\n")));
 
-        printf(BOLD(WHITE("Ordem: Posição - Nome - Vitória - Empate - Derrota\n\n")));
+        printf(BOLD(CYAN("Ordem: Posição - Nome - Vitória - Empate - Derrota\n\n")));
 
         for(int i = 0;i < tam;i++){
 
