@@ -7,6 +7,7 @@
 #include "funcaux.h"
 #include "ranking.h"
 
+
 //função principal main
 int main(){
     

@@ -8,6 +8,8 @@
 #include "funcaux.h"
 #include "ranking.h"
 
+
+
 //FUNÇÕES AUXILIARES DO JOGO
 
 

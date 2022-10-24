@@ -7,6 +7,8 @@
 #include "funcaux.h"
 #include "ranking.h"
 
+
+
 //FUNÇOES PRINCIPAIS PARA O FUNCIONAMENTO DO JOGO
 
 
@@ -199,6 +201,7 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
 
             //Tecla de volta ao menu
             teclamenu();
+
             printf("\n");
             break;      
         }

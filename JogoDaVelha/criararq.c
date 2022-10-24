@@ -3,6 +3,9 @@
 
 int main(){
 
+    /*Código para a criação do velha.ini com 1 jogador,Computador e 
+    as vitórias,empates e derrotas com 0*/
+    
     FILE *arquivo = fopen("velha.ini","w");
 
     fprintf(arquivo,"1\n");

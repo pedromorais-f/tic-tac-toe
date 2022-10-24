@@ -1,6 +1,7 @@
 #ifndef _FUNCAUX_H
 #define _FUNCAUX_H
 
+
 //FUNÇÕES AUXILIARES DO JOGO
 
 //Leitura de dados

@@ -2,6 +2,7 @@
 #define _RANKING_H
 
 
+
 //Ranking
 void atualizaEstatisticas(Usuario *,Usuario,Usuario,int*);
 void imprimeRanking(Usuario *,int);
