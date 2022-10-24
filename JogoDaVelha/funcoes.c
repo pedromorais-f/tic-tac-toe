@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "funcaux.h"
+#include "ranking.h"
 
 //FUNÇOES PRINCIPAIS PARA O FUNCIONAMENTO DO JOGO
 
@@ -160,7 +161,7 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
             }
             else{
 
-                printf("\n\x1b[1mSua posição no Ranking:%d\n",posicaoRanking(jogadores,jogador2));
+                printf("\n\x1b[1mSua posição no Ranking:%d\n",posicaoRanking(jogadores,jogador1));
             }
 
             //Tecla de volta ao menu
@@ -194,15 +195,6 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
             else{
 
                 printf("\n\x1b[1mSua posição no Ranking:%d\n",posicaoRanking(jogadores,jogador1));
-            }
-            //Posição no Ranking
-            if(posicaoRanking(jogadores,jogador2) == -1){
-
-                printf(BOLD(YELLOW("\nSua posição está fora do Ranking\n")));
-            }
-            else{
-
-                printf("\n\x1b[1mSua posição no Ranking:%d\n",posicaoRanking(jogadores,jogador2));
             }
 
             //Tecla de volta ao menu
@@ -397,7 +389,7 @@ void doisplayers(char **jogovelha,char *jogador1,char *jogador2,int contadorjoga
             atualizaEstatisticas(jogadores,jgdr1,jgdr2,tam);
             
             //Posição no Ranking
-            if(posicaoRanking(jogadores,jogador1) == -1){
+            if(posicaoRanking(jogadores,jogador2) == -1){
 
                 printf(BOLD(YELLOW("\nSua posição está fora do Ranking\n")));
             }
@@ -553,7 +545,6 @@ int lerJogo(char **jogovelha,char *jogador1,char *jogador2,char arquivo[20],char
     return 1;
 }
 
-
 //Tabuleiro
 void tabuleiro(char **jogovelha){
 
@@ -620,79 +611,6 @@ void tabuleiro(char **jogovelha){
     printf("\n");
 }
 
-
-//Ranking e suas funções 
-void atualizaEstatisticas(Usuario *jogadores,Usuario jgdr1,Usuario jgdr2,int *tam){
-
-    int posicao1 = checaJogadores(jogadores,*tam,jgdr1);
-    int posicao2 = checaJogadores(jogadores,*tam,jgdr2);
-
-    //Incrementação e criação de novos usuários no Ranking
-    if(posicao1 == -1){
-
-        strcpy(jogadores[*tam].nome,jgdr1.nome);
-        jogadores[*tam].vitoria = jgdr1.vitoria;
-        jogadores[*tam].empate = jgdr1.empate;
-        jogadores[*tam].derrota = jgdr1.derrota;
-        
-        *tam = *tam + 1;
-    }
-    else{
-
-        strcpy(jogadores[posicao1].nome,jgdr1.nome);
-        jogadores[posicao1].vitoria += jgdr1.vitoria;
-        jogadores[posicao1].empate += jgdr1.empate;
-        jogadores[posicao1].derrota += jgdr1.derrota;
-    }
-    if(posicao2 == -1){
-
-        strcpy(jogadores[*tam].nome,jgdr2.nome);
-        jogadores[*tam].vitoria = jgdr2.vitoria;
-        jogadores[*tam].empate = jgdr2.empate;
-        jogadores[*tam].derrota = jgdr2.derrota;
-
-        *tam = *tam + 1;
-    }
-    else{
-
-        strcpy(jogadores[posicao2].nome,jgdr2.nome);
-        jogadores[posicao2].vitoria += jgdr2.vitoria;
-        jogadores[posicao2].empate += jgdr2.empate;
-        jogadores[posicao2].derrota += jgdr2.derrota;
-    }
-    
-    
-    //ordenação dos vetores
-    ordenaVetor(jogadores,*tam);
-    
-}
-
-void imprimeRanking(Usuario *jogadores,int tam){
-
-    //Controlador do Ranking
-    int controlador = 1;
-    
-    while(controlador){
-        
-        printf(BOLD(WHITE("RANKING\n\n\n")));
-
-        printf(BOLD(WHITE("Ordem: Posição - Nome - Vitória - Empate - Derrota\n\n")));
-
-        for(int i = 0;i < tam;i++){
-
-            printf("\x1b[37m\x1b[1m\u2503 %d.%s  %d  %d  %d \n",i + 1,jogadores[i].nome,jogadores[i].vitoria,jogadores[i].empate,jogadores[i].derrota);
-            for(int j = 0;j < 70;j++){
-
-                printf("\u2501");
-            }
-            printf("\n");
-        }
-
-        printf(BOLD(CYAN("\n\nPressione qualquer tecla para voltar!\n")));
-        teclamenu();
-        break;
-    }
-}
 
 
 

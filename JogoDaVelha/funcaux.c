@@ -6,6 +6,7 @@
 #include <time.h>
 #include <ctype.h>
 #include "funcaux.h"
+#include "ranking.h"
 
 //FUNÇÕES AUXILIARES DO JOGO
 
@@ -507,113 +508,5 @@ void inteligenciaComp(char **jogovelha){
     }
 }    
 
-//Funções de auxílio para o Ranking
-Usuario* alocaVetor(int tam){
-
-    //Alocação do vetor de jogadores para o Ranking
-    Usuario *usuarios;
-
-    usuarios = malloc(tam * sizeof(Usuario));
-
-    return usuarios;
-}
-
-void liberaVetor(Usuario *jogadores){
-
-    //Liberação do vetor alocado
-    free(jogadores);
-}
-
-void ordenaVetor(Usuario *vetor,int n){
-    
-    //Ordenação dos vetores priorizando o número de vitórias 
-    //e o próximo critério,o empate
-    
-    Usuario aux;                                                                 
-
-    int maiorAtual;                                                             
-
-    for(int i = 0; i < n; i++){                                                                       
-        //Verificação de quem tem o maior número de vitórias
-        maiorAtual = i;                                                         
-
-        for (int j = i + 1; j < n;j++) {                                       
-
-            if (vetor[j].vitoria > vetor[maiorAtual].vitoria){                        
-
-                maiorAtual = j;
-            }
-            else if((vetor[j].vitoria == vetor[maiorAtual].vitoria)){
-
-                if(vetor[j].empate > vetor[maiorAtual].empate){
-
-                    maiorAtual = j;
-                }
-            }                                                
-        }                                                                       
-        //Troca de suas posições no vetor
-        if(maiorAtual != i) {                                                   
-
-            aux = vetor[i];                                                     
-
-            vetor[i] = vetor[maiorAtual];                                       
-
-            vetor[maiorAtual] = aux;                                            
-
-        }
-
-    }
-
-}
-
-void escreveNovoRanking(Usuario *jogadores,int tam){
-
-    
-    FILE *arquivo = fopen("velha.ini","w");
-    
-    
-    fprintf(arquivo,"%d\n",tam);
-
-    for(int i = 0;i < tam;i++){
-
-        fprintf(arquivo,"%s\n",jogadores[i].nome);
-        fprintf(arquivo,"%d %d %d\n",jogadores[i].vitoria,jogadores[i].empate,jogadores[i].derrota);
-    }
-}
-
-int checaJogadores(Usuario *jogadores,int tam,Usuario jogador){
-
-
-    for(int i = 0;i < tam;i++){
-
-        if(strcmp(jogador.nome,jogadores[i].nome) == 0){
-
-            
-            return i;
-
-        }
-    }
-
-    return -1;
-}
-
-int posicaoRanking(Usuario *jogadores,char *jogador){
-
-    //Procura a posição do player nos 10 primeiros jogadores do vetor
-    //e retorna sua posição ou -1,mostrando que não está posicionado no ranking
-    for(int i = 0;i < 10;i++){
-
-        if(strcmp(jogadores[i].nome,jogador) == 0){
-
-            return i + 1;
-        }
-        else{
-
-            return -1;
-        }
-    }
-
-    return 0;
-}
 
 

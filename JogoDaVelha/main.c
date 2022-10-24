@@ -5,6 +5,7 @@
 #include "cores.h"
 #include "funcoes.h"
 #include "funcaux.h"
+#include "ranking.h"
 
 //função principal main
 int main(){
@@ -41,6 +42,8 @@ int main(){
         usuarios[i].nome[strlen(usuarios[i].nome) - 1] = '\0';
         fscanf(ranking,"%d %d %d ",&usuarios[i].vitoria,&usuarios[i].empate,&usuarios[i].derrota);
     }    
+    
+    //MENU PRINCIPAL DO GAME
     while(controlatudo){
         
         jogovelha = criaMatriz(3,3);
