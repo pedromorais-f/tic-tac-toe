@@ -8,7 +8,6 @@
 #include "ranking.h"
 
 
-
 //Funções de auxílio para o Ranking
 Usuario* alocaVetor(int tam){
 

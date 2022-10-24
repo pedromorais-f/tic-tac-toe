@@ -8,7 +8,6 @@
 #include "ranking.h"
 
 
-
 //FUNÇOES PRINCIPAIS PARA O FUNCIONAMENTO DO JOGO
 
 
@@ -552,60 +551,60 @@ int lerJogo(char **jogovelha,char *jogador1,char *jogador2,char arquivo[20],char
 void tabuleiro(char **jogovelha){
 
     
-    printf("\u250F");
+    printf("\u250F");// ┏ (top-left)
     for(int i = 0; i < 4; i++){
-        printf("\u2501\u2501\u2501");
+        printf("\u2501\u2501\u2501");// ━ (horizontal)
         if(i != 3)
-            printf("\u2533");
+            printf("\u2533");// ┳ (top-join)
         else{
-            printf("\u2513");
+            printf("\u2513");// ┓ (top-right)
         }
     }
     printf("\n");
-    printf("\u2503   ");
+    printf("\u2503   ");// ┃ (vertical)
     for(int i = 0; i < 3; i++){
-        printf("\u2503 %d ", i+1);
+        printf("\u2503 %d ", i+1);// ┃ (vertical)
     }
-    printf("\u2503");
+    printf("\u2503");// ┃ (vertical)
     printf("\n");
 
-    printf("\u2523");
+    printf("\u2523");// ┣ (middle-left)
     for(int i = 0; i < 4; i++){
-        printf("\u2501\u2501\u2501");
+        printf("\u2501\u2501\u2501");// ━ (horizontal)
         if(i != 3)
-            printf("\u254B");
+            printf("\u254B");// ╋ (middle-join)
         else{
-            printf("\u252B");
+            printf("\u252B");// ┫ (middle-right)
         }
     }
     printf("\n");
 
     for(int i = 0; i < 3; i++){
-        printf("\u2503 %d ", i+1);
+        printf("\u2503 %d ", i+1);// ┃ (vertical)
         for(int j = 0; j < 3; j++){
-            printf("\u2503 %c ", jogovelha[i][j]);
+            printf("\u2503 %c ", jogovelha[i][j]);// ┃ (vertical)
         }
-        printf("\u2503");
+        printf("\u2503");// ┃ (vertical)
         printf("\n");
         if(i != 2){
-            printf("\u2523");
+            printf("\u2523");// ┣ (middle-left)
             for(int j = 0; j < 4; j++){
-                printf("\u2501\u2501\u2501");
+                printf("\u2501\u2501\u2501");// ━ (horizontal)
                 if(j != 3)
-                    printf("\u254B");
+                    printf("\u254B");// ╋ (middle-join)
                 else{
-                    printf("\u252B");
+                    printf("\u252B");// ┫ (middle-right)
                 }
             }
         }
         else{
-            printf("\u2517");
+            printf("\u2517");// ┗ (bottom-left)
             for(int j = 0; j < 4; j++){
-                printf("\u2501\u2501\u2501");
+                printf("\u2501\u2501\u2501");// ━ (horizontal)
                 if(j != 3)
-                    printf("\u253B");
+                    printf("\u253B");// ┻ (bottom-join)
                 else{
-                    printf("\u251B");
+                    printf("\u251B");// ┛ (bottom-right)
                 }
             }
         }

@@ -2,7 +2,6 @@
 #define _FUNCOES_H
 
 
-
 //ESTRUTURA DO RANKING
 typedef struct{
 

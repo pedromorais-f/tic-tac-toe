@@ -8,6 +8,7 @@
 #include "ranking.h"
 
 
+
 //função principal main
 int main(){
     
@@ -143,7 +144,7 @@ int main(){
                     break;
                 case '4':
                     //Impressão do Ranking dos 10 melhores jogadores
-                    imprimeRanking(usuarios,tam);
+                    imprimeRanking(usuarios,10);
                     break;  
         
                 default:
