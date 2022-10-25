@@ -2,7 +2,6 @@
 #ifndef _CORES_H
 #define _CORES_H
 
-
 // cores e formato de texto
 #define ANSI_RESET            "\x1b[0m"  // desativa os efeitos anteriores
 #define ANSI_BOLD             "\x1b[1m"  // coloca o texto em negrito

@@ -7,7 +7,6 @@
 #include "funcaux.h"
 #include "ranking.h"
 
-
 //FUNÇOES PRINCIPAIS PARA O FUNCIONAMENTO DO JOGO
 
 

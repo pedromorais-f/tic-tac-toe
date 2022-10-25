@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int main(){
 
     /*Código para a criação do velha.ini com 1 jogador,Computador e 
