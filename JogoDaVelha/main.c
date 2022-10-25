@@ -96,51 +96,15 @@ int main(){
                     controladormenu = 1;
                     break;
                 case '2':
+                    //Carregar jogo
                     printf(BOLD(CYAN("Digite o nome do arquivo salvo:")));
                     fgets(nomearq,20,stdin);
-                    remocao_salto(nomearq);
-                    //Validação se o arquivo em questão existe ou não
-                    if(lerJogo(jogovelha,jogador1,jogador2,nomearq,opcaojg,3,3) == -1){
-
-                        printf(BOLD(RED("ARQUIVO NÃO ENCONTRADO!!!\n")));
-                        controladormenu = 0;
-                    }    
-                    else{
-                        for(int k = 0;k < 3;k++){
-
-                            for(int m = 0;m < 3;m++){
-
-                                if(jogovelha[k][m] != ' '){
-
-                                    contadorjogadas += 1;
-                                    jogadas += 1;
-                                }
-                            }
-                        }   
-                        controladormenu = 1;
-                    }    
+                    nomearq[strlen(nomearq) - 1] = '\0';
+                    controladormenu = 1;   
                     break;
-                case '3':  
-                    //Validação se o arquivo em questão existe ou não
-                    if(lerJogo(jogovelha,jogador1,jogador2,nomearq,opcaojg,3,3) == -1){
-
-                        printf(BOLD(RED("ARQUIVO NÃO ENCONTRADO!!!\n")));
-                        controladormenu = 0;
-                    }    
-                    else{
-                        for(int k = 0;k < 3;k++){
-
-                            for(int m = 0;m < 3;m++){
-
-                                if(jogovelha[k][m] != ' '){
-
-                                    contadorjogadas += 1;
-                                    jogadas += 1;
-                                }
-                            }
-                        }   
-                        controladormenu = 1;
-                    }    
+                case '3':
+                    //Continuar Jogo Salvo
+                    controladormenu = 1;   
                     break;
                 case '4':
                     //Impressão do Ranking dos 10 melhores jogadores
@@ -152,6 +116,49 @@ int main(){
                     controladormenu = 0;           
             }
         }
+        if(opcao == '2'){
+            //Validação se o arquivo em questão existe ou não
+            if(lerJogo(jogovelha,jogador1,jogador2,nomearq,opcaojg,3,3) == -1){
+
+                printf(BOLD(RED("ARQUIVO NÃO ENCONTRADO!!!\n")));
+                controladormenu = 0;
+            }   
+            else{
+                    
+                for(int k = 0;k < 3;k++){
+                    
+                    for(int m = 0;m < 3;m++){
+
+                        if(jogovelha[k][m] != ' '){
+
+                            contadorjogadas += 1;
+                            jogadas += 1;
+                        }
+                    }
+                }   
+            }
+        }
+        if(opcao == '3'){
+
+            if(lerJogo(jogovelha,jogador1,jogador2,"jogoEmAndamento.txt",opcaojg,3,3) == -1){
+
+                    printf(BOLD(RED("ARQUIVO NÃO ENCONTRADO!!!\n")));
+                    controladormenu = 0;
+            }   
+            else{
+                for(int k = 0;k < 3;k++){
+
+                    for(int m = 0;m < 3;m++){
+
+                        if(jogovelha[k][m] != ' '){
+
+                            contadorjogadas += 1;
+                            jogadas += 1;
+                        }
+                    }
+                }
+            } 
+        }
         if(opcaojg == '1'){
 
             //Início do jogo de 1 jogador
@@ -160,7 +167,7 @@ int main(){
             controladormenu = 0;    
         }
         else if(opcaojg == '2'){
-        
+            
             //Início do jogo de 2 jogadores
             doisplayers(jogovelha,jogador1,jogador2,contadorjogadas,jogadas,usuarios,&tam);
             liberaMatriz(jogovelha,3);
