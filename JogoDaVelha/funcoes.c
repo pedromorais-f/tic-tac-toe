@@ -462,7 +462,7 @@ void escreveJogo(char **jogovelha,char *arquivo,char opcaojg,int l,int c,int jog
 
     //Salva o nome dos jogadores na partida
     fprintf(jogo1,"%s\n",jogador1);
-    fprintf(jogo1,"%s \n",jogador2);
+    fprintf(jogo1,"%s\n",jogador2);
     
     //Salva o tabuleiro e os espaços vazios se tornam asteriscos
     for(int i = 0;i < l;i++){
@@ -483,8 +483,7 @@ void escreveJogo(char **jogovelha,char *arquivo,char opcaojg,int l,int c,int jog
     //Salva quem foi o último a jogar
     if(jogadas % 2 != 0){
 
-        opcaojg = '1';
-        fprintf(jogo1,"%c\n",opcaojg);
+        fprintf(jogo1,"%c\n",opcaojg - 1);
     }
     if(jogadas % 2 == 0){
 
@@ -493,7 +492,7 @@ void escreveJogo(char **jogovelha,char *arquivo,char opcaojg,int l,int c,int jog
     fclose(jogo1);      
 }
 
-int lerJogo(char **jogovelha,char *jogador1,char *jogador2,char arquivo[20],char opcaojg,int l,int c){
+int lerJogo(char **jogovelha,char *jogador1,char *jogador2,char arquivo[100],char opcaojg,int l,int c){
 
     
     FILE *jogo1 = NULL;
@@ -511,6 +510,60 @@ int lerJogo(char **jogovelha,char *jogador1,char *jogador2,char arquivo[20],char
     //Leitura do nomme dos jogadores na seção e remoção do /n na leitura
     fgets(jogador1,20,jogo1);
     jogador1[strlen(jogador1) - 1] = '\0';
+    
+    fgets(jogador2,20,jogo1);
+    jogador2[strlen(jogador2) - 1] = '\0';
+    
+    //Leitura do tabuleiro
+    for(int i = 0;i < l;i++){
+
+        for(int j = 0;j < c;j++){
+
+            if(jogovelha[i][j] == ' '){
+
+                fscanf(jogo1,"%c ",&jogovelha[i][j]);
+            }
+            else{
+                fscanf(jogo1,"%c ",&jogovelha[i][j]);
+            } 
+        }
+    }
+
+    //Substituição dos asteriscos por espaços vazios 
+    for(int k = 0;k < l;k++){
+
+        for(int m = 0;m < c;m++){
+
+            if(jogovelha[k][m] == '-'){
+
+                jogovelha[k][m] = ' ';
+            }
+        }
+    }
+    fclose(jogo1);
+
+    //Retorno de 1,para a sucesso do carregamento
+    return 1;
+}
+int lerJogoEmAndamento(char **jogovelha,char *jogador1,char *jogador2,char arquivo[20],char opcaojg,int l,int c){
+
+    
+    FILE *jogo1 = NULL;
+    //Validação do arquivo,se ele não existir,retorna -1
+    jogo1 = fopen(arquivo,"r");
+    if(jogo1 == NULL){
+
+        
+        return -1;
+    }
+
+    //Leitura da opção jogada salva no arquivo
+    fscanf(jogo1,"%c ",&opcaojg);
+
+    //Leitura do nomme dos jogadores na seção e remoção do /n na leitura
+    fgets(jogador1,20,jogo1);
+    jogador1[strlen(jogador1) - 1] = '\0';
+    
     fgets(jogador2,20,jogo1);
     jogador2[strlen(jogador2) - 1] = '\0';
     

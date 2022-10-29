@@ -23,6 +23,7 @@ void tabuleiro();
 
 //Salvamento e carregamento de dados do jogo
 void escreveJogo(char **,char *,char,int,int,int,char *,char*);
-int lerJogo(char **,char *,char *,char[20],char,int,int);
+int lerJogo(char **,char *,char *,char[100],char,int,int);
+int lerJogoEmAndamento(char **,char *,char *,char[20],char,int,int);
 
 #endif
