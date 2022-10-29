@@ -1,11 +1,11 @@
 # JOGODAVELHA
 
-APRESENTAÇÃO:
+--------------------APRESENTAÇÃO--------------------------------
 
 Versão de um jogo da velha escrito na linguagem de programação C
 
 
-FUNÇÕES:
+------------------------FUNÇÕES---------------------------------
 
 -Encerramento do jogo
 
@@ -17,4 +17,4 @@ FUNÇÕES:
 
 -Exibição do ranking do jogo
 
-
+-----------------------------------------------------------------
