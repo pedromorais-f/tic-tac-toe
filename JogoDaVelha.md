@@ -1,20 +1,20 @@
-# JOGODAVELHA
+# TICTACTOE
 
---------------------APRESENTAÇÃO--------------------------------
+--------------------PRESENTATION--------------------------------
 
 Versão de um jogo da velha escrito na linguagem de programação C
 
 
-------------------------FUNÇÕES---------------------------------
+------------------------FUNCTIONS---------------------------------
 
--Encerramento do jogo
+-End of the game
 
--Começo de um novo jogo
+-Start a new game
 
--Continuar um jogo salvo
+-Load a save game
 
--Continuar um jogo em andamento
+-Continue a game in process
 
--Exibição do ranking do jogo
+-Exhibition of a ranking
 
 -----------------------------------------------------------------
