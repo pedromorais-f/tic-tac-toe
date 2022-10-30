@@ -2,10 +2,10 @@
 
 --------------------PRESENTATION--------------------------------
 
-Versão de um jogo da velha escrito na linguagem de programação C
+A version of the game TicTacToe coded in C
 
 
-------------------------FUNCTIONS---------------------------------
+---------------------FUNCTIONS---------------------------------
 
 -End of the game
 
@@ -17,4 +17,8 @@ Versão de um jogo da velha escrito na linguagem de programação C
 
 -Exhibition of a ranking
 
------------------------------------------------------------------
+---------------------COMMENTS---------------------------------
+
+The code is in a portuguese version
+
+--------------------------------------------------------------
