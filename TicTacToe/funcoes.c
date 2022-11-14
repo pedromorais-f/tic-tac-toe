@@ -44,6 +44,7 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
     
     while(contadorjogadas <= 9){
 
+        screenClear();
         printf("\n");
         tabuleiro(jogovelha);
 
@@ -68,7 +69,7 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
             }
     
             //Mark on the board
-            if(strcmp("marcar",comando1) == 0){
+            if((strcmp("marcar",comando1) == 0)){
 
                 linha = comando2[0] - '0';
                 coluna = comando2[1] - '0';
@@ -113,6 +114,7 @@ void umplayer(char **jogovelha,char *jogador1,char *jogador2,int contadorjogadas
             jogadas++;
         }
         
+       screenClear();
        //Verify the results
         if(checagem(jogovelha) == 1){
 
@@ -240,6 +242,7 @@ void doisplayers(char **jogovelha,char *jogador1,char *jogador2,int contadorjoga
 
     while(contadorjogadas <= 9){
 
+        screenClear();
         printf("\n");
         tabuleiro(jogovelha);
 
@@ -351,6 +354,7 @@ void doisplayers(char **jogovelha,char *jogador1,char *jogador2,int contadorjoga
             } 
         }
         
+        screenClear();
         //Verify the results
         if(checagem(jogovelha) == 1){
 

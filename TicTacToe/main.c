@@ -51,6 +51,7 @@ int main(){
         jogovelha = criaMatriz(3,3);
         contadorjogadas = 0;
         jogadas = 1;
+        screenClear();
         
         while(controladormenu == 0){
 
@@ -73,10 +74,12 @@ int main(){
                 escreveNovoRanking(usuarios,tam);
                 fclose(ranking);
                 liberaVetor(usuarios);
+                screenClear();
                 return 0;
             }
             else if(opcao == '1'){
 
+                screenClear();
                 printf(BOLD(CYAN("\nDigite o número de jogadores(1 ou 2):")));
                 scanf("%c",&opcaojg);
                 getchar();
@@ -105,6 +108,7 @@ int main(){
             }
             else if(opcao == '2'){
             
+                screenClear();
                 printf(BOLD(CYAN("Digite o nome do arquivo salvo:")));
                 fgets(nomearq,100,stdin);
                 nomearq[strlen(nomearq) - 1] = '\0';
@@ -138,6 +142,7 @@ int main(){
             }
             else if(opcao == '3'){
 
+                screenClear();
                 if(lerJogoEmAndamento(jogovelha,jogador1,jogador2,jogoarq,opcaojg,3,3) == -1){
 
                         printf(BOLD(RED("ARQUIVO NÃO ENCONTRADO!!!\n")));
@@ -165,6 +170,7 @@ int main(){
             }
             else if(opcao == '4'){
 
+                screenClear();
                 //Ranking exhibition
                 imprimeRanking(usuarios,10);
             }
@@ -181,6 +187,7 @@ int main(){
         
         if(opcaojg == '1'){
             
+            screenClear();
             //Start the game against the machine
             umplayer(jogovelha,jogador1,"Computador",contadorjogadas,jogadas,usuarios,&tam);
             liberaMatriz(jogovelha,3);
@@ -188,6 +195,7 @@ int main(){
         }
         else if(opcaojg == '2'){
 
+            screenClear();
             //Start the game player vs player
             doisplayers(jogovelha,jogador1,jogador2,contadorjogadas,jogadas,usuarios,&tam);
             liberaMatriz(jogovelha,3);
