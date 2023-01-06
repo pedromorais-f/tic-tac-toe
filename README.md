@@ -17,8 +17,4 @@ A version of the game TicTacToe coded in C
 
 -Exhibition of a ranking
 
----------------------COMMENTS---------------------------------
-
-The code is in a portuguese version
-
---------------------------------------------------------------
+---------------------------------------------------------------
