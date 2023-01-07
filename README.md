@@ -1,4 +1,4 @@
-# TICTACTOE
+# TicTacToe
 
 --------------------PRESENTATION--------------------------------
 
